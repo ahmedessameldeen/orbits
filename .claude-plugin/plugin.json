@@ -1,0 +1,21 @@
+{
+  "name": "orbits-flow",
+  "version": "1.0.0",
+  "description": "A working agreement for shipping software with agents. Six stages — Overview, Resolve, Break down, Implement, Test, Ship — each ending at a gate a person opens. A fix is finished when the number moves, not when it merges.",
+  "author": {
+    "name": "Ahmed Essameldin",
+    "url": "https://github.com/ahmedessameldeen"
+  },
+  "homepage": "https://github.com/ahmedessameldeen/orbits",
+  "repository": "https://github.com/ahmedessameldeen/orbits",
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "agents",
+    "code-review",
+    "shipping",
+    "process",
+    "gates",
+    "metrics"
+  ]
+}

@@ -1,0 +1,969 @@
+<!doctype html><html><head><meta charset=utf8><title>The ORBITS Flow</title><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#F1F3F6;
+    --surface:#FFFFFF;
+    --surface-2:#FAFBFC;
+    --ink:#171A21;
+    --ink-2:#39414F;
+    --muted:#606A7B;
+    --rule:#D6DCE5;
+    --rule-soft:#E6EAF0;
+    --gate:#A05F00;
+    --gate-ink:#7A4800;
+    --gate-soft:#FBF1DF;
+    --shadow:0 1px 2px rgba(20,26,38,.05), 0 8px 24px -14px rgba(20,26,38,.28);
+    --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#101318;
+      --surface:#181C24;
+      --surface-2:#1D222B;
+      --ink:#E9ECF2;
+      --ink-2:#C2C9D6;
+      --muted:#949DAD;
+      --rule:#2B3140;
+      --rule-soft:#232935;
+      --gate:#F2AC42;
+      --gate-ink:#F8C87A;
+      --gate-soft:#2A2114;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -16px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#101318;
+    --surface:#181C24;
+    --surface-2:#1D222B;
+    --ink:#E9ECF2;
+    --ink-2:#C2C9D6;
+    --muted:#949DAD;
+    --rule:#2B3140;
+    --rule-soft:#232935;
+    --gate:#F2AC42;
+    --gate-ink:#F8C87A;
+    --gate-soft:#2A2114;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -16px rgba(0,0,0,.8);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px 96px}
+  .col{max-width:760px}
+
+  /* ---------- header ---------- */
+  header.top{
+    border-bottom:1px solid var(--rule);
+    padding:64px 0 40px;
+    margin-bottom:48px;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--gate);
+    margin:0 0 20px;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(40px,6.4vw,68px);
+    line-height:1.02;
+    letter-spacing:-.03em;
+    margin:0 0 20px;
+    text-wrap:balance;
+  }
+  .lede{
+    font-size:19px;
+    line-height:1.55;
+    color:var(--ink-2);
+    max-width:640px;
+    margin:0 0 28px;
+  }
+  .lede strong{font-weight:600;color:var(--ink)}
+  .meta{
+    display:flex;flex-wrap:wrap;gap:8px 28px;
+    font-family:var(--mono);font-size:12px;color:var(--muted);
+    padding-top:8px;border-top:1px solid var(--rule-soft);
+  }
+  .meta b{font-weight:500;color:var(--ink-2)}
+
+  /* ---------- type ---------- */
+  h2{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:28px;
+    letter-spacing:-.02em;
+    margin:0 0 6px;
+  }
+  h3{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:17px;
+    letter-spacing:-.01em;
+    margin:0;
+  }
+  .sub{color:var(--muted);font-size:15px;margin:0 0 28px;max-width:660px}
+  p{margin:0 0 16px}
+  section{margin-bottom:72px}
+  code{
+    font-family:var(--mono);font-size:.86em;
+    background:var(--surface-2);border:1px solid var(--rule-soft);
+    padding:1px 5px;border-radius:3px;color:var(--ink-2);
+  }
+
+  /* ---------- figures ---------- */
+  figure{margin:0 0 12px}
+  .scroller{overflow-x:auto;padding-bottom:6px}
+  svg.dia{display:block;width:100%;min-width:760px;height:auto;color:var(--ink-2)}
+  figcaption{
+    font-size:13.5px;color:var(--muted);
+    max-width:720px;margin-top:14px;padding-left:2px;
+  }
+
+  /* ---------- stage cards ---------- */
+  .stages{display:grid;gap:14px}
+  .stage{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:6px;
+    box-shadow:var(--shadow);
+    display:grid;
+    grid-template-columns:64px 1fr 300px;
+    align-items:start;
+  }
+  .stage .num{
+    font-family:var(--display);font-weight:700;font-size:24px;
+    letter-spacing:-.02em;color:var(--gate);
+    padding:20px 0 20px 22px;
+    font-variant-numeric:tabular-nums;
+  }
+  .stage .body{padding:20px 24px 20px 0}
+  .stage .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .who{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);border:1px solid var(--rule);border-radius:99px;padding:2px 9px;
+  }
+  .stage ul{margin:0;padding-left:17px;color:var(--ink-2);font-size:14.5px;line-height:1.62}
+  .stage li{margin-bottom:4px}
+  .stage li::marker{color:var(--muted)}
+  .gatebox{
+    border-left:1px solid var(--rule);
+    background:var(--gate-soft);
+    padding:20px 22px;
+    align-self:stretch;
+    border-radius:0 5px 5px 0;
+  }
+  .gatelabel{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--gate);margin-bottom:7px;
+  }
+  .gatetext{font-size:14.5px;line-height:1.5;color:var(--gate-ink);font-weight:500}
+  .tools{
+    margin-top:12px;padding-top:10px;border-top:1px solid color-mix(in srgb, var(--gate) 22%, transparent);
+    font-family:var(--mono);font-size:11.5px;line-height:1.65;color:var(--gate-ink);opacity:.85;
+    word-break:break-word;
+  }
+
+  /* ---------- rule blocks ---------- */
+  .rules{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .rule{
+    background:var(--surface);border:1px solid var(--rule);border-radius:6px;
+    padding:20px 22px;box-shadow:var(--shadow);
+  }
+  .rule h3{margin-bottom:8px}
+  .rule p{font-size:14.5px;color:var(--ink-2);margin:0}
+
+  ol.disc{counter-reset:d;list-style:none;padding:0;margin:0;display:grid;gap:2px}
+  ol.disc li{
+    counter-increment:d;position:relative;padding:7px 0 7px 34px;
+    font-size:15px;color:var(--ink-2);border-bottom:1px solid var(--rule-soft);
+  }
+  ol.disc li:last-child{border-bottom:0}
+  ol.disc li::before{
+    content:counter(d);position:absolute;left:0;top:7px;
+    font-family:var(--mono);font-size:11px;color:var(--gate);
+    width:20px;text-align:right;line-height:1.75;
+  }
+  ol.disc b{color:var(--ink);font-weight:600}
+
+  /* ---------- reality panel ---------- */
+  .reality{
+    background:var(--surface);border:1px solid var(--rule);
+    border-left:3px solid var(--gate);border-radius:0 6px 6px 0;
+    padding:26px 28px;box-shadow:var(--shadow);
+  }
+  .reality dl{margin:0;display:grid;grid-template-columns:210px 1fr;gap:0}
+  .reality dt{
+    font-family:var(--mono);font-size:12px;color:var(--gate);
+    padding:11px 16px 11px 0;border-top:1px solid var(--rule-soft);
+  }
+  .reality dd{
+    margin:0;padding:11px 0;font-size:14.5px;color:var(--ink-2);
+    border-top:1px solid var(--rule-soft);
+  }
+  .reality dl > dt:first-of-type, .reality dl > dt:first-of-type + dd{border-top:0}
+
+  footer{
+    border-top:1px solid var(--rule);padding-top:26px;
+    font-family:var(--mono);font-size:12.5px;color:var(--muted);line-height:1.85;
+  }
+  footer b{color:var(--ink-2);font-weight:500}
+
+  @media (max-width:900px){
+    .stage{grid-template-columns:52px 1fr}
+    .stage .num{padding-left:18px}
+    .stage .body{padding-right:18px}
+    .gatebox{grid-column:1 / -1;border-left:0;border-top:1px solid var(--rule);border-radius:0 0 5px 5px}
+    .rules{grid-template-columns:1fr}
+    .reality dl{grid-template-columns:1fr}
+    .reality dd{padding-top:0;border-top:0}
+    .reality dt{padding-bottom:2px}
+  }
+  .stage .num{font-size:30px;padding-left:20px;width:100%}
+  pre.shape{
+    font-family:var(--mono);font-size:12.5px;line-height:1.7;
+    background:var(--surface-2);border:1px solid var(--rule);
+    border-radius:5px;padding:16px 18px;margin:0 0 16px;
+    overflow-x:auto;color:var(--ink-2);white-space:pre;
+  }
+  pre.shape b{color:var(--gate);font-weight:500}
+  table.grid{
+    width:100%;border-collapse:collapse;font-size:14.5px;
+    background:var(--surface);border:1px solid var(--rule);border-radius:6px;
+    overflow:hidden;box-shadow:var(--shadow);
+  }
+  table.grid th{
+    text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.11em;
+    text-transform:uppercase;color:var(--muted);font-weight:400;
+    padding:12px 16px;border-bottom:1px solid var(--rule);background:var(--surface-2);
+  }
+  table.grid td{padding:11px 16px;border-bottom:1px solid var(--rule-soft);color:var(--ink-2);vertical-align:top}
+  table.grid tr:last-child td{border-bottom:0}
+  table.grid td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+  .scroll-x{overflow-x:auto}
+  .cycle-note{
+    background:var(--gate-soft);border:1px solid var(--gate);border-opacity:.4;
+    border-radius:6px;padding:20px 24px;margin:0 0 28px;
+  }
+  .cycle-note p{margin:0;color:var(--gate-ink);font-size:15px;line-height:1.6}
+  .cycle-note strong{font-weight:600}
+  hr.div{border:0;border-top:1px solid var(--rule);margin:80px 0 56px}
+  .appendix h2{color:var(--ink)}
+  .appendix .sub{max-width:700px}
+  .tag{
+    display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--gate);border:1px solid var(--gate);
+    border-radius:99px;padding:3px 11px;margin-bottom:18px;
+  }
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">A working agreement for shipping software with agents</p>
+  <h1>The ORBITS Flow</h1>
+  <p class="lede">Six stages from a <strong>measured problem</strong> to a
+  <strong>verified fix</strong>. Each one ends at a gate that a person opens. Work does not
+  move forward because it feels finished — it moves forward because the gate opened.</p>
+  <p class="lede" style="font-size:16px;color:var(--muted);margin-bottom:24px"><strong>O</strong>verview · <strong>R</strong>esolve · <strong>B</strong>reak down ·
+  <strong>I</strong>mplement · <strong>T</strong>est · <strong>S</strong>hip. It is called
+  ORBITS because the work comes back around: the follow-up filed at Ship re-enters at
+  Overview, carrying the number it was opened to check.</p>
+  <div class="meta">
+    <span><b>A fix is finished</b> when the number moves, not when it merges</span>
+    <span><b>A person</b> opens every gate — or reviews them in one batch, on autopilot</span>
+    <span><b>Agents</b> write the code, never commit</span>
+  </div>
+</header>
+
+<section>
+  <h2>The pipeline</h2>
+  <p class="sub">Read left to right. Amber bars are gates. The dashed curves are how work
+  comes back — normal, not a failure of the process. The solid curve at the bottom is the
+  one that makes this a cycle rather than a line.</p>
+
+  <figure>
+    <div class="scroller">
+      <svg class="dia" viewBox="0 0 1140 326" role="img"
+           aria-label="Six stages — Overview, Resolve, Break down, Implement, Test, Ship — each followed by a gate that must open before the next begins. Two dashed return paths run backwards: a chunk that fails twice returns from Implement to Break down, and work that turns out to be the wrong thing returns from Test to Resolve. A solid path returns from Ship all the way to Overview, closing the orbit, carrying the follow-up check on whether the measured problem actually improved.">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+          </marker>
+          <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--gate)"/>
+          </marker>
+        </defs>
+        <text x="110" y="42" text-anchor="middle" font-family="Archivo, sans-serif" font-size="19" font-weight="700" fill="var(--gate)">O</text>
+        <rect x="30" y="58" width="160" height="60" rx="4" fill="var(--surface)" stroke="currentColor" stroke-opacity=".38"/>
+        <text x="110" y="86" text-anchor="middle" font-family="Archivo, sans-serif" font-size="15" font-weight="600" fill="var(--ink)">Overview</text>
+        <text x="110" y="104" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--muted)">person + orchestrator</text>
+        <line x1="110" y1="118" x2="110" y2="140" stroke="var(--gate)" stroke-width="1.5"/>
+        <rect x="36" y="140" width="148" height="46" rx="3" fill="var(--gate-soft)" stroke="var(--gate)" stroke-opacity=".55"/>
+        <text x="110" y="158" text-anchor="middle" font-size="10" fill="var(--gate-ink)">problem agreed —</text>
+        <text x="110" y="172" text-anchor="middle" font-size="10" fill="var(--gate-ink)">and it has a number</text>
+        <text x="294" y="42" text-anchor="middle" font-family="Archivo, sans-serif" font-size="19" font-weight="700" fill="var(--gate)">R</text>
+        <rect x="214" y="58" width="160" height="60" rx="4" fill="var(--surface)" stroke="currentColor" stroke-opacity=".38"/>
+        <text x="294" y="86" text-anchor="middle" font-family="Archivo, sans-serif" font-size="15" font-weight="600" fill="var(--ink)">Resolve</text>
+        <text x="294" y="104" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--muted)">person + orchestrator</text>
+        <line x1="294" y1="118" x2="294" y2="140" stroke="var(--gate)" stroke-width="1.5"/>
+        <rect x="220" y="140" width="148" height="46" rx="3" fill="var(--gate-soft)" stroke="var(--gate)" stroke-opacity=".55"/>
+        <text x="294" y="158" text-anchor="middle" font-size="10" fill="var(--gate-ink)">one approach,</text>
+        <text x="294" y="172" text-anchor="middle" font-size="10" fill="var(--gate-ink)">one target number</text>
+        <text x="478" y="42" text-anchor="middle" font-family="Archivo, sans-serif" font-size="19" font-weight="700" fill="var(--gate)">B</text>
+        <rect x="398" y="58" width="160" height="60" rx="4" fill="var(--surface)" stroke="currentColor" stroke-opacity=".38"/>
+        <text x="478" y="86" text-anchor="middle" font-family="Archivo, sans-serif" font-size="15" font-weight="600" fill="var(--ink)">Break down</text>
+        <text x="478" y="104" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--muted)">orchestrator</text>
+        <line x1="478" y1="118" x2="478" y2="140" stroke="var(--gate)" stroke-width="1.5"/>
+        <rect x="404" y="140" width="148" height="46" rx="3" fill="var(--gate-soft)" stroke="var(--gate)" stroke-opacity=".55"/>
+        <text x="478" y="158" text-anchor="middle" font-size="10" fill="var(--gate-ink)">plan approved,</text>
+        <text x="478" y="172" text-anchor="middle" font-size="10" fill="var(--gate-ink)">permissions cleared</text>
+        <text x="662" y="42" text-anchor="middle" font-family="Archivo, sans-serif" font-size="19" font-weight="700" fill="var(--gate)">I</text>
+        <rect x="582" y="58" width="160" height="60" rx="4" fill="var(--surface)" stroke="currentColor" stroke-opacity=".38"/>
+        <text x="662" y="86" text-anchor="middle" font-family="Archivo, sans-serif" font-size="15" font-weight="600" fill="var(--ink)">Implement</text>
+        <text x="662" y="104" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--muted)">implementer, chunk by chunk</text>
+        <line x1="662" y1="118" x2="662" y2="140" stroke="var(--gate)" stroke-width="1.5"/>
+        <rect x="588" y="140" width="148" height="46" rx="3" fill="var(--gate-soft)" stroke="var(--gate)" stroke-opacity=".55"/>
+        <text x="662" y="158" text-anchor="middle" font-size="10" fill="var(--gate-ink)">every chunk meets</text>
+        <text x="662" y="172" text-anchor="middle" font-size="10" fill="var(--gate-ink)">its criteria</text>
+        <text x="846" y="42" text-anchor="middle" font-family="Archivo, sans-serif" font-size="19" font-weight="700" fill="var(--gate)">T</text>
+        <rect x="766" y="58" width="160" height="60" rx="4" fill="var(--surface)" stroke="currentColor" stroke-opacity=".38"/>
+        <text x="846" y="86" text-anchor="middle" font-family="Archivo, sans-serif" font-size="15" font-weight="600" fill="var(--ink)">Test</text>
+        <text x="846" y="104" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--muted)">person, then orchestrator</text>
+        <line x1="846" y1="118" x2="846" y2="140" stroke="var(--gate)" stroke-width="1.5"/>
+        <rect x="772" y="140" width="148" height="46" rx="3" fill="var(--gate-soft)" stroke="var(--gate)" stroke-opacity=".55"/>
+        <text x="846" y="158" text-anchor="middle" font-size="10" fill="var(--gate-ink)">works in your hands,</text>
+        <text x="846" y="172" text-anchor="middle" font-size="10" fill="var(--gate-ink)">all gates green</text>
+        <text x="1030" y="42" text-anchor="middle" font-family="Archivo, sans-serif" font-size="19" font-weight="700" fill="var(--gate)">S</text>
+        <rect x="950" y="58" width="160" height="60" rx="4" fill="var(--surface)" stroke="currentColor" stroke-opacity=".38"/>
+        <text x="1030" y="86" text-anchor="middle" font-family="Archivo, sans-serif" font-size="15" font-weight="600" fill="var(--ink)">Ship</text>
+        <text x="1030" y="104" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--muted)">orchestrator</text>
+        <line x1="1030" y1="118" x2="1030" y2="140" stroke="var(--gate)" stroke-width="1.5"/>
+        <rect x="956" y="140" width="148" height="46" rx="3" fill="var(--gate-soft)" stroke="var(--gate)" stroke-opacity=".55"/>
+        <text x="1030" y="158" text-anchor="middle" font-size="10" fill="var(--gate-ink)">PR with proof,</text>
+        <text x="1030" y="172" text-anchor="middle" font-size="10" fill="var(--gate-ink)">follow-up filed</text>
+        <line x1="191" y1="88" x2="209" y2="88" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah)"/>
+        <line x1="375" y1="88" x2="393" y2="88" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah)"/>
+        <line x1="559" y1="88" x2="577" y2="88" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah)"/>
+        <line x1="743" y1="88" x2="761" y2="88" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah)"/>
+        <line x1="927" y1="88" x2="945" y2="88" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah)"/>
+
+        <path d="M662 187 C 662 218, 478 218, 478 190" fill="none" stroke="var(--gate)" stroke-width="1.4"
+              stroke-dasharray="4 3" marker-end="url(#ahg)"/>
+        <text x="570" y="228" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--gate)">chunk fails twice → the plan was wrong</text>
+
+        <path d="M846 187 C 846 268, 294 268, 294 190" fill="none" stroke="var(--gate)" stroke-width="1.4"
+              stroke-dasharray="4 3" marker-end="url(#ahg)"/>
+        <text x="570" y="264" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--gate)">right code, wrong thing → choose again</text>
+
+        <path d="M1030 187 C 1030 322, 110 322, 110 190" fill="none" stroke="var(--gate)" stroke-width="2.2"
+              marker-end="url(#ahg)"/>
+        <text x="570" y="310" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="500" fill="var(--gate)">the orbit closes · weeks later · did the number actually move?</text>
+      </svg>
+    </div>
+    <figcaption>Every dashed return starts on the expensive side of the flow and lands on the
+    cheap side. That is the argument for spending real time in Overview and Resolve: those two
+    stages cost messages, and the stages they protect cost days. The solid path is different
+    — it is not a failure, it is the flow closing its own loop.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>Roles, not product names</h2>
+  <p class="sub">Written so it survives a change of tooling. Map the roles onto whatever
+  agents you actually have; one agent can hold several. The only role that must never
+  collapse into another is the person — the gates exist to be opened by a human.</p>
+
+  <div class="scroll-x">
+  <table class="grid">
+    <tr><th>Role</th><th>Does</th><th>Usually</th></tr>
+    <tr><td>Person</td><td>Opens every gate. Decides. Runs the app.</td><td>You</td></tr>
+    <tr><td>Orchestrator</td><td>Owns judgment. Plans, briefs, verifies, argues, lands.</td><td>The agent you are talking to</td></tr>
+    <tr><td>Implementer</td><td>Writes code from a brief, in its own context.</td><td>A delegated coding agent, or the orchestrator itself</td></tr>
+    <tr><td>Reviewer</td><td>Argues against the diff and the plan.</td><td>A second agent, if one exists</td></tr>
+    <tr><td>Analyst</td><td>Pulls the numbers — errors, complaints, funnels, adoption.</td><td>Usually the orchestrator with analytics tools</td></tr>
+  </table>
+  </div>
+
+  <div class="rules" style="margin-top:20px">
+    <div class="rule">
+      <h3>Context parity</h3>
+      <p>Every agent gets the same material the orchestrator has — ticket text, defect detail,
+      design spec, decisions already made — <strong>pasted into the brief, not linked</strong>.
+      An implementer without the ticket invents a requirement. One that has it can argue with
+      it, and that argument is worth having. Where an agent cannot reach a source, the
+      orchestrator carries the content across.</p>
+    </div>
+    <div class="rule">
+      <h3>Ask, never guess</h3>
+      <p>An agent missing something it needs asks for it. It is never fenced out of the
+      reasoning because of what it cannot see for itself.</p>
+    </div>
+    <div class="rule">
+      <h3>Debate needs two agents</h3>
+      <p>With a second capable agent, findings get argued between agents — stated as claims
+      with evidence, answered with a fix or a defence. With only one, the orchestrator puts
+      them to the person. A single agent arguing with itself produces the appearance of
+      rigour and none of the substance.</p>
+    </div>
+    <div class="rule">
+      <h3>Talk early, terse late</h3>
+      <p>Overview and Resolve are cheap and are where the expensive mistakes get caught — take as
+      many rounds as the problem needs. Implement, Test and Ship are where brevity pays. Budget the
+      conversation the opposite way round from the instinct.</p>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>The six stages</h2>
+  <p class="sub">Who drives, what happens, and what has to be true before the next stage starts.</p>
+
+  <div class="stages">
+
+    <article class="stage">
+      <div class="num">O</div>
+      <div class="body">
+        <div class="head"><h3>Overview</h3><span class="who">person + orchestrator</span></div>
+        <ul>
+          <li>Read the primary record, not a summary — the ticket <em>and its comments</em>, the defect and its occurrences, the PR and its inline comments, the design and its tokens.</li>
+          <li><strong>Get the number.</strong> How many people hit this, how often, since when, on what versions. Record the metric, the <em>exact query</em>, the value, the date and the release.</li>
+          <li>No number available? Say so explicitly and name what will be watched after release. "No baseline" is an honest answer; silence is not.</li>
+          <li>Confirm the claim against the code. Reports often describe a symptom whose cause is elsewhere.</li>
+          <li>Pull the design now, not at review time.</li>
+          <li>Other agents read breadth cheaply — call sites, prior art, whether the stated cause fits the code. They get the ticket text too, and may push back on it.</li>
+        </ul>
+      </div>
+      <div class="gatebox">
+        <div class="gatelabel">Gate</div>
+        <div class="gatetext">The problem statement is agreed, and it carries a baseline number — or a reasoned "none available".</div>
+      </div>
+    </article>
+
+    <article class="stage">
+      <div class="num">R</div>
+      <div class="body">
+        <div class="head"><h3>Resolve</h3><span class="who">person + orchestrator</span></div>
+        <ul>
+          <li>Two or three real approaches — not one plus two strawmen. If there is genuinely one sensible way, say so.</li>
+          <li>Cost each on files touched, blast radius, data migration, reversibility, and fit with the existing code.</li>
+          <li>Recommend one, with the reason. A survey with no recommendation pushes the orchestrator's job onto the person.</li>
+          <li><strong>Name the target metric</strong> — what should move, by how much, when to check, and what would say it did <em>not</em> work.</li>
+          <li>Choose the method deliberately: test-first, follow-the-neighbour, design-first, model-first, or measure-first.</li>
+        </ul>
+      </div>
+      <div class="gatebox">
+        <div class="gatelabel">Gate</div>
+        <div class="gatetext">One approach chosen and the target metric agreed. The rejected options are recorded too — that list ages well.</div>
+      </div>
+    </article>
+
+    <article class="stage">
+      <div class="num">B</div>
+      <div class="body">
+        <div class="head"><h3>Break down</h3><span class="who">orchestrator</span></div>
+        <ul>
+          <li>Impact first — who calls this, what breaks. High risk goes to the person <em>before</em> anything is dispatched.</li>
+          <li>Read the neighbouring code: how siblings wire dependencies, name things, and write their tests.</li>
+          <li>List problems already in the code being touched. Each gets a verdict — fix now, file a ticket, or note. <strong>Default is file a ticket</strong>, so the change stays reviewable.</li>
+          <li>Simplicity pass: fewer files? any abstraction used once? would the boring version work?</li>
+          <li>Chunk it — three files or fewer each, its own gate command, written acceptance criteria, <strong>riskiest chunk first</strong>.</li>
+          <li><strong>Permission pre-flight</strong>, so Implement runs without stopping.</li>
+          <li>Decide now what the PR will show, and write the design doc.</li>
+        </ul>
+      </div>
+      <div class="gatebox">
+        <div class="gatelabel">Gate</div>
+        <div class="gatetext">The plan is approved and the permissions are cleared. Backing out here costs one conversation; backing out at Test costs a week.</div>
+      </div>
+    </article>
+
+    <article class="stage">
+      <div class="num">I</div>
+      <div class="body">
+        <div class="head"><h3>Implement</h3><span class="who">implementer, chunk by chunk</span></div>
+        <ul>
+          <li>One chunk per brief, and the brief is self-contained — assume no memory of the repo.</li>
+          <li>Standing authorisation included, or the reply comes back as a design and the question "shall I proceed?". Break down was the planning; the brief is the approval.</li>
+          <li>Effort dialled per chunk, not per task: cheap for mechanical work, expensive for concurrency and migrations.</li>
+          <li>Each chunk's diff reviewed against that chunk's criteria, and its gate run first-hand, before the next begins.</li>
+          <li>Findings get fixed <em>or defended</em>. When a defence is right, the finding is dropped — plainly.</li>
+        </ul>
+      </div>
+      <div class="gatebox">
+        <div class="gatelabel">Gate</div>
+        <div class="gatetext">Every chunk green, then the full suite. Two failures on one chunk means the plan was wrong — go back to Break down, do not grind.</div>
+      </div>
+    </article>
+
+    <article class="stage">
+      <div class="num">T</div>
+      <div class="body">
+        <div class="head"><h3>Test</h3><span class="who">person, then orchestrator</span></div>
+        <ul>
+          <li><strong>It works in your hands.</strong> The person runs it from an exact script — build, path, before, after, setup, and the one thing most likely to be subtly wrong.</li>
+          <li>Naming the setup matters: some bugs are invisible without a specific device setting turned on.</li>
+          <li>UI work is compared against the design frame and its tokens — the numbers, not the vibe. Previews added for the states this change affects.</li>
+          <li><strong>Capture the pictures here</strong>, while the build is on a device and the state is set up. Ship needs them and reconstructing them later costs far more.</li>
+          <li>Then every gate, run first-hand: code review, formatter, linter, the full suite, coverage. A tool that cannot run locally is <em>said</em> not to have run.</li>
+        </ul>
+      </div>
+      <div class="gatebox">
+        <div class="gatelabel">Gate</div>
+        <div class="gatetext">It works in the person's hands, and every gate is green with numbers from runs you performed yourself.</div>
+      </div>
+    </article>
+
+    <article class="stage">
+      <div class="num">S</div>
+      <div class="body">
+        <div class="head"><h3>Ship</h3><span class="who">orchestrator</span></div>
+        <ul>
+          <li><strong>Findings first, PR second.</strong> Say what the diff contains and what was left out, before creating anything.</li>
+          <li>Stage files by name, never a bare add-all. Commit and push only when the person asks.</li>
+          <li><strong>Attach the proof</strong> — before and after, side by side. For a fix, the "before" is the argument.</li>
+          <li>PR body in simple English, one screen or less. Design notes in a collapsed section.</li>
+          <li>Link back: the PR onto the ticket, and every adjacent finding marked TICKET during Break down gets filed now.</li>
+          <li><strong>File the follow-up</strong> that re-runs the baseline query once the release has real adoption. Without it the orbit never closes.</li>
+        </ul>
+      </div>
+      <div class="gatebox">
+        <div class="gatelabel">Gate</div>
+        <div class="gatetext">PR open with proof attached, linked to the ticket, and the follow-up filed with a date or a trigger.</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section>
+  <h2>Closing the loop</h2>
+  <div class="cycle-note">
+    <p><strong>A merged pull request is a claim, not evidence.</strong> The evidence arrives
+    weeks later, in the data. This is the step almost every team skips, and it is the reason
+    the flow is called ORBITS.</p>
+  </div>
+
+  <p>Overview records where the problem started. Resolve says what should change. Ship files a
+  ticket that goes and checks.</p>
+
+  <pre class="shape"><b>BASELINE</b>  recorded at Overview
+  metric      crash-free sessions on the checkout screen
+  query       &lt;the exact query — it has to be re-runnable&gt;
+  value       97.1%
+  date        2026-09-01
+  version     12.3
+
+<b>TARGET</b>    agreed at Resolve
+  target      above 99.5%
+  check at    12.4, once adoption passes 40%
+  failure     still below 98%, or crashes move to another screen
+
+<b>FOLLOW-UP</b> filed at Ship
+  claim       what this change was supposed to fix
+  links       the PR, the original ticket, the defect
+  if not met  who to tell, and what the next move is</pre>
+
+  <p>Schedule the check for when enough people are actually running the release — most crash
+  tools report version adoption, so use that as the trigger rather than a guessed date.
+  Comparing too early produces a confident wrong answer.</p>
+
+  <p>Then re-run the identical query. Three outcomes, all useful:</p>
+
+  <div class="scroll-x">
+  <table class="grid">
+    <tr><th>Outcome</th><th>What it means</th><th>What happens</th></tr>
+    <tr><td>Moved as expected</td><td>The fix worked</td><td>Close it, and say so on the original ticket. This is how a team learns which fixes actually work.</td></tr>
+    <tr><td>Did not move</td><td>Wrong, incomplete, or aimed at the wrong cause</td><td>Reopen at <strong>Overview</strong> — now with better data than the first time.</td></tr>
+    <tr><td>Moved, something else worse</td><td>The negative check earned its keep</td><td>New problem, new pass. Better found by you than by a user.</td></tr>
+  </table>
+  </div>
+</section>
+<section>
+  <h2>Inside Implement</h2>
+  <p class="sub">The chunk loop is where fail-fast actually lives. A hundred lines reviewed in
+  four passes of twenty-five beats a hundred reviewed once — because when chunk two is wrong,
+  chunks three and four have not been built on top of it yet.</p>
+
+  <figure>
+    <div class="scroller">
+      <svg class="dia" viewBox="0 0 980 250" role="img"
+           aria-label="The craft loop: a brief goes to the implementer, the resulting diff is reviewed and its gate run first-hand, a clean result passes the chunk gate to the next chunk, and findings go to a debate step that returns fixes to the implementer for at most two rounds. A chunk that fails twice returns to the break-down stage.">
+        <defs>
+          <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+          </marker>
+          <marker id="ahg2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--gate)"/>
+          </marker>
+        </defs>
+
+        <rect x="20" y="46" width="160" height="54" rx="4" fill="var(--surface)" stroke="currentColor" stroke-opacity=".38"/>
+        <text x="100" y="70" text-anchor="middle" font-family="Archivo, sans-serif" font-size="14" font-weight="600" fill="var(--ink)">Write the brief</text>
+        <text x="100" y="87" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">criteria + rules + source</text>
+
+        <rect x="210" y="46" width="160" height="54" rx="4" fill="var(--surface)" stroke="currentColor" stroke-opacity=".38"/>
+        <text x="290" y="70" text-anchor="middle" font-family="Archivo, sans-serif" font-size="14" font-weight="600" fill="var(--ink)">Implementer</text>
+        <text x="290" y="87" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">own sandbox · own context</text>
+
+        <rect x="400" y="46" width="160" height="54" rx="4" fill="var(--surface)" stroke="currentColor" stroke-opacity=".38"/>
+        <text x="480" y="70" text-anchor="middle" font-family="Archivo, sans-serif" font-size="14" font-weight="600" fill="var(--ink)">Read the diff</text>
+        <text x="480" y="87" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">+ run the gate yourself</text>
+
+        <rect x="590" y="46" width="160" height="54" rx="4" fill="var(--gate-soft)" stroke="var(--gate)" stroke-opacity=".65"/>
+        <text x="670" y="70" text-anchor="middle" font-family="Archivo, sans-serif" font-size="14" font-weight="600" fill="var(--gate-ink)">Chunk gate</text>
+        <text x="670" y="87" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--gate-ink)">criteria met?</text>
+
+        <rect x="780" y="46" width="160" height="54" rx="4" fill="var(--surface)" stroke="currentColor" stroke-opacity=".38"/>
+        <text x="860" y="70" text-anchor="middle" font-family="Archivo, sans-serif" font-size="14" font-weight="600" fill="var(--ink)">Next chunk</text>
+        <text x="860" y="87" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">or the stage gate</text>
+
+        <rect x="400" y="152" width="160" height="50" rx="4" fill="var(--surface)" stroke="currentColor" stroke-opacity=".38"/>
+        <text x="480" y="174" text-anchor="middle" font-family="Archivo, sans-serif" font-size="14" font-weight="600" fill="var(--ink)">Argue it</text>
+        <text x="480" y="190" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">fix it, or defend it</text>
+
+        <line x1="181" y1="73" x2="205" y2="73" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah2)"/>
+        <line x1="371" y1="73" x2="395" y2="73" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah2)"/>
+        <line x1="561" y1="73" x2="585" y2="73" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah2)"/>
+        <text x="573" y="38" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">clean</text>
+        <line x1="751" y1="73" x2="775" y2="73" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah2)"/>
+        <text x="763" y="38" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">green</text>
+
+        <line x1="480" y1="101" x2="480" y2="148" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah2)"/>
+        <text x="492" y="128" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">findings</text>
+
+        <path d="M400 177 C 320 177, 290 150, 290 105" fill="none" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah2)"/>
+        <text x="298" y="196" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">same session · 2 rounds max</text>
+
+        <path d="M670 101 C 670 226, 200 238, 108 238" fill="none" stroke="var(--gate)" stroke-width="1.4"
+              stroke-dasharray="4 3" marker-end="url(#ahg2)"/>
+        <text x="644" y="234" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--gate)">fails twice → the plan was wrong, back to Break down</text>
+      </svg>
+    </div>
+    <figcaption>The implementer reading and typing in its own context is where the saving comes
+    from — far more than choosing a cheaper model. Two rounds caps any single disagreement;
+    after that it goes to the person with both positions, and nothing lands.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>No interruptions during Implement</h2>
+  <p class="sub">Every approval prompt mid-implementation breaks the loop, costs a context
+  switch, and tempts everyone toward a blanket "allow everything" that removes the prompts
+  worth keeping.</p>
+
+  <p>Pre-approving is the right instinct. But the usual cause of prompt fatigue is not missing
+  pre-approval — it is an allowlist built from <strong>literal one-off commands instead of
+  patterns</strong>. An entry naming one exact test invocation matches once and never again.
+  Ten near-identical entries pile up, the list grows to hundreds of lines, and the prompts keep
+  coming. Generalising is what fixes it.</p>
+
+  <div class="rules">
+    <div class="rule">
+      <h3>Two surfaces, not one</h3>
+      <p>The orchestrator has its own permissions. A delegated implementer running in its own
+      sandbox has separate ones — an approval mode, a trusted-project list, a write policy. A
+      pre-flight that clears only the first still stalls on the second.</p>
+    </div>
+    <div class="rule">
+      <h3>Once per project</h3>
+      <p>Write generalised patterns into the project's shared settings so the whole team
+      benefits: the build tool in general form, read-only inspection, the test toolchain,
+      device tooling, the analytics and design services the flow reads from.</p>
+    </div>
+    <div class="rule">
+      <h3>Once per task, at Break down</h3>
+      <p>The plan already names the files and the gates. From it, predict only what is
+      <em>new</em> — a module not built before, a service read for the first time, a scratch
+      path. Two minutes here buys an uninterrupted run.</p>
+    </div>
+    <div class="rule">
+      <h3>Leave the sharp ones prompting</h3>
+      <p>Push, open or merge a PR, force-push, delete branches or files, deploy, anything
+      touching production or secrets. These prompts are not friction — they are the last
+      checkpoint before an action that leaves the machine. Audit broad wildcards over your
+      version-control CLI: they usually swallow push and PR creation without anyone noticing.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Show the change</h2>
+  <p class="sub">A pull request that changes what a user sees should carry a picture. A
+  reviewer who can see the change reviews it better than one reading a description of it.</p>
+
+  <div class="scroll-x">
+  <table class="grid">
+    <tr><th>Source</th><th>Good for</th></tr>
+    <tr><td>Device screenshot</td><td>The real thing — real data, real fonts, real density</td></tr>
+    <tr><td>Screen recording</td><td>Flows, animation, timing, gestures</td></tr>
+    <tr><td>Component previews</td><td>Many states at once, cheaply, with no device</td></tr>
+    <tr><td>Design frame beside the build</td><td>Proving the implementation matches the spec</td></tr>
+    <tr><td>A chart of the metric</td><td>Fixes where "before" is a number, not a picture</td></tr>
+  </table>
+  </div>
+
+  <ol class="disc" style="margin-top:22px">
+    <li><b>Capture during Test</b>, while the build is on a device and the state is already set up. Reconstructing it later costs far more.</li>
+    <li><b>Before and after, side by side</b>, beats after-only. For a fix, the "before" is the whole argument.</li>
+    <li><b>Most platform CLIs cannot upload images to a pull request</b> — hosting normally happens through the web interface. So capture the files, name them clearly, and hand over a ready-made markdown block to drop in. Do not pretend an automated upload happened, and do not commit screenshots into the source tree to work around it.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Autopilot</h2>
+  <p class="sub">A mode for when the approving is the slow part, not the deciding.</p>
+
+  <div class="cycle-note">
+    <p><strong>Autopilot flies the cruise, not the landing.</strong> It opens the gates it
+    can defend on its own, takes its own recommended option, and keeps going — then hands
+    back with a record of every decision it made for you.</p>
+  </div>
+
+  <p>It does not remove the gates. It <strong>batches</strong> them: one review at the
+  handover instead of five conversations spread across a day. The quality bar does not
+  move — every gate command still runs, every diff still gets read, every finding still
+  gets argued.</p>
+
+  <figure>
+    <div class="scroller">
+      <svg class="dia" viewBox="0 0 1020 200" role="img"
+           aria-label="Autopilot covers the first four stages — Overview, Resolve, Break down and Implement — opening their gates itself and logging each decision. It hands control back to the person at Test, and Ship proceeds normally under human control.">
+        <defs>
+          <marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+          </marker>
+        </defs>
+
+        <rect x="20" y="66" width="580" height="66" rx="5" fill="var(--gate-soft)" stroke="var(--gate)" stroke-opacity=".5" stroke-dasharray="5 4"/>
+        <text x="310" y="52" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.5" fill="var(--gate)">AUTOPILOT — GATES SELF-OPENED, EACH ONE LOGGED</text>
+
+        <rect x="36" y="80" width="126" height="38" rx="3" fill="var(--surface)" stroke="currentColor" stroke-opacity=".35"/>
+        <text x="99" y="104" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Overview</text>
+        <rect x="176" y="80" width="126" height="38" rx="3" fill="var(--surface)" stroke="currentColor" stroke-opacity=".35"/>
+        <text x="239" y="104" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Resolve</text>
+        <rect x="316" y="80" width="126" height="38" rx="3" fill="var(--surface)" stroke="currentColor" stroke-opacity=".35"/>
+        <text x="379" y="104" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Break down</text>
+        <rect x="456" y="80" width="128" height="38" rx="3" fill="var(--surface)" stroke="currentColor" stroke-opacity=".35"/>
+        <text x="520" y="104" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Implement</text>
+
+        <line x1="163" y1="99" x2="173" y2="99" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah3)"/>
+        <line x1="303" y1="99" x2="313" y2="99" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah3)"/>
+        <line x1="443" y1="99" x2="453" y2="99" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah3)"/>
+
+        <line x1="601" y1="99" x2="647" y2="99" stroke="var(--gate)" stroke-width="2" marker-end="url(#ah3)"/>
+        <text x="624" y="86" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--gate)">handover</text>
+
+        <rect x="652" y="66" width="348" height="66" rx="5" fill="var(--surface)" stroke="currentColor" stroke-opacity=".45"/>
+        <text x="826" y="52" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.5" fill="var(--muted)">PERSON HAS THE CONTROLS</text>
+        <rect x="668" y="80" width="150" height="38" rx="3" fill="var(--surface-2)" stroke="currentColor" stroke-opacity=".35"/>
+        <text x="743" y="104" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Test</text>
+        <rect x="834" y="80" width="150" height="38" rx="3" fill="var(--surface-2)" stroke="currentColor" stroke-opacity=".35"/>
+        <text x="909" y="104" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Ship</text>
+        <line x1="819" y1="99" x2="829" y2="99" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah3)"/>
+
+        <text x="743" y="156" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">needs a person</text>
+        <text x="743" y="170" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">holding a device</text>
+        <text x="909" y="156" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">leaves the machine —</text>
+        <text x="909" y="170" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">cannot be quietly undone</text>
+      </svg>
+    </div>
+    <figcaption>The two gates autopilot never opens are not policy choices. Test needs a
+    person holding a device; Ship sends work somewhere it cannot be quietly retrieved from.
+    Everything before them is where the waiting actually lives.</figcaption>
+  </figure>
+
+  <h3 style="font-size:20px;margin:40px 0 6px">Hard stops — in every mode</h3>
+  <p class="sub">Each is a case where guessing wrong is expensive and you know something
+  the flow does not. When one fires, it says which, states what it would have chosen, and
+  waits.</p>
+
+  <div class="rules">
+    <div class="rule">
+      <h3>About the problem</h3>
+      <p>No baseline number and the change alters behaviour · the evidence contradicts the
+      ticket · an abort condition fires — already fixed, not worth the cost, belongs to
+      another system.</p>
+    </div>
+    <div class="rule">
+      <h3>About the approach</h3>
+      <p>Two approaches score within a hair of each other · the change is one-way — a
+      migration, a stored format, data already on people's devices · it touches auth,
+      payments, personal data, deletion, release or signing · blast radius is HIGH or
+      CRITICAL.</p>
+    </div>
+    <div class="rule">
+      <h3>About the work</h3>
+      <p>A chunk fails twice — a wrong plan does not improve by being retried harder · a
+      finding is still contested after two rounds · the change reaches into a submodule or
+      generated code · permissions are needed that the pre-flight did not anticipate.</p>
+    </div>
+    <div class="rule">
+      <h3>Always</h3>
+      <p>Anything that leaves the machine: push, pull request, ticket writes, deploys,
+      messages.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size:20px;margin:40px 0 6px">The decision log</h3>
+  <p class="sub">What makes autopilot reviewable rather than merely fast. Every gate it
+  opens on your behalf gets one entry.</p>
+
+  <pre class="shape"><b>GATE</b>        which gate, and when
+<b>CHOSE</b>       what it picked
+<b>BECAUSE</b>     the reason, one line
+<b>REJECTED</b>    what it did not pick, and why
+<b>CONFIDENCE</b>  high | medium — anything lower is a hard stop, not a log entry
+<b>UNDO</b>        how to reverse this if you disagree</pre>
+
+  <p><strong>A gate opened without an entry was skipped, not automated.</strong></p>
+
+  <h3 style="font-size:20px;margin:40px 0 6px">When to use it</h3>
+  <div class="scroll-x">
+  <table class="grid">
+    <tr><th>Good fit</th><th>Poor fit</th></tr>
+    <tr>
+      <td>A well-specified bug with a clear reproduction and a real number behind it. A mechanical refactor with strong coverage. A dependency bump. Anything where you would have approved the obvious plan anyway.</td>
+      <td>Anything where the requirement is genuinely uncertain, where you would want to argue about the approach, or where being wrong is expensive to unwind. Those are the tasks the gates exist for.</td>
+    </tr>
+  </table>
+  </div>
+
+  <p style="margin-top:22px">Said plainly: autopilot is a bet that the recommended option
+  is right. It pays off on routine work and costs a whole run on ambiguous work. The
+  hard-stop list is what keeps the bet small — <strong>if it is firing often, the task was
+  not routine and the mode was the wrong choice.</strong></p>
+</section>
+
+<section>
+  <h2>Rules that hold everywhere</h2>
+  <div class="rules">
+    <div class="rule">
+      <h3>Gates are hard</h3>
+      <p>State the gate and wait for it. No starting the next bit while we discuss. A gate you
+      skipped is rework you have not paid for yet. On autopilot the gate still has to be
+      opened and logged — it is answered sooner, not waived.</p>
+    </div>
+    <div class="rule">
+      <h3>Two rounds, then escalate</h3>
+      <p>Any single disagreement gets two rounds. Still contested: both positions stated fairly,
+      a recommendation made, and the person decides. Nothing lands while contested.</p>
+    </div>
+    <div class="rule">
+      <h3>Abort is a valid outcome</h3>
+      <p>At Overview and Break down the honest answer may be that the ticket is wrong, already fixed,
+      or not worth the cost. Say it and stop. Do not build something to avoid an awkward
+      conversation.</p>
+    </div>
+    <div class="rule">
+      <h3>A claim is not evidence</h3>
+      <p>An agent reporting green is making a claim. The gates get re-run first-hand, with real
+      numbers, every time. Anything not verified is said plainly rather than left to silence.</p>
+    </div>
+    <div class="rule">
+      <h3>Write for a tired reader</h3>
+      <p>PRs, tickets and design notes in short, plain sentences. No idioms. Assume the reader's
+      English is weak and their day is long. A PR description longer than one screen has failed.</p>
+    </div>
+    <div class="rule">
+      <h3>Comments only where code cannot speak</h3>
+      <p>A non-obvious <em>why</em>, or a workaround with a ticket link. Never restate the code.
+      Never comment code you did not change.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Keeping it cheap</h2>
+  <p class="sub">Token discipline, stated mechanically rather than hoped for — and spent where
+  it matters, on the early conversation.</p>
+  <ol class="disc">
+    <li><b>Never paste file contents into the conversation.</b> Cite a path and a line number.</li>
+    <li><b>Implementers read and type in their own context.</b> None of it lands in the orchestrator's. That is the real saving; model tier is a smaller dial on top.</li>
+    <li><b>Stage playbooks are read on entry</b>, not loaded up front.</li>
+    <li><b>The implementer's session is reused</b> for follow-ups rather than re-briefed from scratch.</li>
+    <li><b>Review the diff, not the file.</b></li>
+    <li><b>Fixed output shapes per stage.</b> No prose padding, no restating what just happened.</li>
+    <li><b>No narration.</b> Tool calls are not announced before they are made.</li>
+  </ol>
+</section>
+<hr class="div">
+
+<section class="appendix">
+  <span class="tag">Appendix · one team's setup</span>
+  <h2>How we wire it up</h2>
+  <p class="sub">Everything above is deliberately vendor-neutral, so it can be lifted into any
+  team. This last part is the opposite: it is one concrete instance, included so the abstract
+  parts have something to stand on. Yours will look different.</p>
+
+  <div class="scroll-x">
+  <table class="grid">
+    <tr><th>Role</th><th>Filled by</th></tr>
+    <tr><td>Person</td><td>The Android engineer running the task</td></tr>
+    <tr><td>Orchestrator</td><td>Claude Code</td></tr>
+    <tr><td>Implementer</td><td>Codex CLI, dispatched to its own sandbox and never allowed to commit</td></tr>
+    <tr><td>Reviewer</td><td>The same implementer in its existing session, plus a separate review pass</td></tr>
+    <tr><td>Analyst</td><td>Crash and feedback tooling, plus product analytics, driven by the orchestrator</td></tr>
+  </table>
+  </div>
+
+  <p style="margin-top:28px">Two capable agents are available, so debate at Implement is real
+  rather than ceremonial. A team with one agent runs the same five stages and puts the
+  findings to a person instead.</p>
+
+  <h3 style="font-size:20px;margin:44px 0 6px">What we found when we checked</h3>
+  <p class="sub">Worth writing down, because the flow claims these gates and two of them were
+  not doing what everyone assumed.</p>
+  <div class="reality">
+    <dl>
+      <dt>No CI</dt>
+      <dd>The gates run on a laptop and nowhere else. That makes the Test and Ship stages the entire
+      safety net rather than a redundant local check.</dd>
+
+      <dt>Commit hook never fires</dt>
+      <dd>It is present but not executable, so it silently does nothing. Not a reason to skip
+      verification flags — a reason to run the gates by hand.</dd>
+
+      <dt>Static analysis cannot publish</dt>
+      <dd>The plugin is configured, but with no server address or token on the machine it
+      cannot run locally. So the flow says so, and runs an honest proxy checklist instead of
+      implying a scan happened.</dd>
+
+      <dt>Push is un-prompted</dt>
+      <dd>A broad wildcard over the version-control CLI had quietly swallowed push and
+      pull-request creation, so the rule "only push when asked" was enforced by nothing but
+      good manners.</dd>
+
+      <dt>Screenshot testing on the shelf</dt>
+      <dd>The library is in the dependency catalog, declared, and used by nothing. Available,
+      unadopted — a project of its own, not a passenger on a feature branch.</dd>
+
+      <dt>Thin preview coverage</dt>
+      <dd>Roughly one in seven component files has a preview, so adding them for the states a
+      change affects is usually a real improvement rather than noise.</dd>
+    </dl>
+  </div>
+</section>
+
+<footer>
+  <b>Overview</b> of the problem, with a number · <b>Resolve</b> on an approach, with a target<br>
+  <b>Break down</b> into chunks, clear the permissions · <b>Implement</b> one at a time<br>
+  <b>Test</b> it in your hands · <b>Ship</b> it with proof<br>
+  then go back and check the number moved — that is the orbit closing
+</footer>
+
+</div>
+
+</body></html>

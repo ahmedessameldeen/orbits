@@ -1,0 +1,19 @@
+{
+  "name": "orbits",
+  "owner": {
+    "name": "Ahmed Essameldin",
+    "url": "https://github.com/ahmedessameldeen"
+  },
+  "metadata": {
+    "description": "The ORBITS Flow — a gated, metric-anchored working agreement for shipping software with agents",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "orbits-flow",
+      "source": "./",
+      "description": "Six stages from a measured problem to a verified fix — Overview, Resolve, Break down, Implement, Test, Ship. Each ends at a gate a person opens. Adds the ORBITS skill plus /orbits commands for running the flow, batching gates on autopilot, briefing implementers, clearing permissions, and closing the loop on the number.",
+      "strict": false
+    }
+  ]
+}
