@@ -279,13 +279,14 @@
   <strong>verified fix</strong>. Each one ends at a gate that a person opens. Work does not
   move forward because it feels finished — it moves forward because the gate opened.</p>
   <p class="lede" style="font-size:16px;color:var(--muted);margin-bottom:24px"><strong>O</strong>verview · <strong>R</strong>esolve · <strong>B</strong>reak down ·
-  <strong>I</strong>mplement · <strong>T</strong>est · <strong>S</strong>hip. It is called
+  <strong>I</strong>mplement · <strong>T</strong>est · <strong>S</strong>hip.
+  <em>Resolve</em> means resolving on a course of action, not resolving the ticket. It is called
   ORBITS because the work comes back around: the follow-up filed at Ship re-enters at
   Overview, carrying the number it was opened to check.</p>
   <div class="meta">
     <span><b>A fix is finished</b> when the number moves, not when it merges</span>
     <span><b>A person</b> opens every gate — or reviews them in one batch, on autopilot</span>
-    <span><b>Agents</b> write the code, never commit</span>
+    <span><b>Agents</b> write the code — nothing leaves the machine without a person</span>
   </div>
 </header>
 
@@ -297,8 +298,8 @@
 
   <figure>
     <div class="scroller">
-      <svg class="dia" viewBox="0 0 1140 326" role="img"
-           aria-label="Six stages — Overview, Resolve, Break down, Implement, Test, Ship — each followed by a gate that must open before the next begins. Two dashed return paths run backwards: a chunk that fails twice returns from Implement to Break down, and work that turns out to be the wrong thing returns from Test to Resolve. A solid path returns from Ship all the way to Overview, closing the orbit, carrying the follow-up check on whether the measured problem actually improved.">
+      <svg class="dia" viewBox="0 -52 1140 378" role="img"
+           aria-label="Six stages — Overview, Resolve, Break down, Implement, Test, Ship — each followed by a gate that must open before the next begins. Three dashed return paths run backwards: a chunk that fails twice returns from Implement to Break down, work that turns out to be the wrong thing returns from Test to Resolve, and a cause found to be elsewhere returns from Break down to Overview. A solid path returns from Ship all the way to Overview, closing the orbit, carrying the follow-up check on whether the measured problem actually improved.">
         <defs>
           <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
@@ -345,7 +346,7 @@
         <text x="846" y="104" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--muted)">person, then orchestrator</text>
         <line x1="846" y1="118" x2="846" y2="140" stroke="var(--gate)" stroke-width="1.5"/>
         <rect x="772" y="140" width="148" height="46" rx="3" fill="var(--gate-soft)" stroke="var(--gate)" stroke-opacity=".55"/>
-        <text x="846" y="158" text-anchor="middle" font-size="10" fill="var(--gate-ink)">works in your hands,</text>
+        <text x="846" y="158" text-anchor="middle" font-size="10" fill="var(--gate-ink)">a human ran it,</text>
         <text x="846" y="172" text-anchor="middle" font-size="10" fill="var(--gate-ink)">all gates green</text>
         <text x="1030" y="42" text-anchor="middle" font-family="Archivo, sans-serif" font-size="19" font-weight="700" fill="var(--gate)">S</text>
         <rect x="950" y="58" width="160" height="60" rx="4" fill="var(--surface)" stroke="currentColor" stroke-opacity=".38"/>
@@ -354,7 +355,7 @@
         <line x1="1030" y1="118" x2="1030" y2="140" stroke="var(--gate)" stroke-width="1.5"/>
         <rect x="956" y="140" width="148" height="46" rx="3" fill="var(--gate-soft)" stroke="var(--gate)" stroke-opacity=".55"/>
         <text x="1030" y="158" text-anchor="middle" font-size="10" fill="var(--gate-ink)">PR with proof,</text>
-        <text x="1030" y="172" text-anchor="middle" font-size="10" fill="var(--gate-ink)">follow-up filed</text>
+        <text x="1030" y="172" text-anchor="middle" font-size="10" fill="var(--gate-ink)">rollout + follow-up</text>
         <line x1="191" y1="88" x2="209" y2="88" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah)"/>
         <line x1="375" y1="88" x2="393" y2="88" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah)"/>
         <line x1="559" y1="88" x2="577" y2="88" stroke="currentColor" stroke-width="1.4" marker-end="url(#ah)"/>
@@ -368,6 +369,10 @@
         <path d="M846 187 C 846 268, 294 268, 294 190" fill="none" stroke="var(--gate)" stroke-width="1.4"
               stroke-dasharray="4 3" marker-end="url(#ahg)"/>
         <text x="570" y="264" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--gate)">right code, wrong thing → choose again</text>
+
+        <path d="M440 57 C 440 -24, 70 -24, 70 55" fill="none" stroke="var(--gate)" stroke-width="1.4"
+              stroke-dasharray="4 3" marker-end="url(#ahg)"/>
+        <text x="255" y="-30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--gate)">the cause is elsewhere &#8594; the problem statement was wrong</text>
 
         <path d="M1030 187 C 1030 322, 110 322, 110 190" fill="none" stroke="var(--gate)" stroke-width="2.2"
               marker-end="url(#ahg)"/>
@@ -440,7 +445,9 @@
         <ul>
           <li>Read the primary record, not a summary — the ticket <em>and its comments</em>, the defect and its occurrences, the PR and its inline comments, the design and its tokens.</li>
           <li><strong>Get the number.</strong> How many people hit this, how often, since when, on what versions. Record the metric, the <em>exact query</em>, the value, the date and the release.</li>
-          <li>No number available? Say so explicitly and name what will be watched after release. "No baseline" is an honest answer; silence is not.</li>
+          <li>Which number depends on the work: a <strong>trailing</strong> number for something that already exists, measured before you touch it — a <strong>leading</strong> number for something new, defined before and measured after.</li>
+          <li>New work has numbers too: adoption of the new path, completion rate of the flow it sits in, time to first success, support contacts about the thing it replaces. "No baseline" is an honest answer for a fix; it is rarely the honest answer for a feature.</li>
+          <li>Neither applies? Name what you will watch, and the <strong>regret condition</strong> — what would make you wish you had not done this. A change nobody can name one for is a change nobody can evaluate.</li>
           <li>Confirm the claim against the code. Reports often describe a symptom whose cause is elsewhere.</li>
           <li>Pull the design now, not at review time.</li>
           <li>Other agents read breadth cheaply — call sites, prior art, whether the stated cause fits the code. They get the ticket text too, and may push back on it.</li>
@@ -482,6 +489,7 @@
           <li>Chunk it — three files or fewer each, its own gate command, written acceptance criteria, <strong>riskiest chunk first</strong>.</li>
           <li><strong>Permission pre-flight</strong>, so Implement runs without stopping.</li>
           <li>Decide now what the PR will show, and write the design doc.</li>
+          <li><strong>The cause is elsewhere?</strong> That is a return to Overview, not a quiet rewrite of the problem statement — the baseline was recorded against the stated cause.</li>
         </ul>
       </div>
       <div class="gatebox">
@@ -513,8 +521,9 @@
       <div class="body">
         <div class="head"><h3>Test</h3><span class="who">person, then orchestrator</span></div>
         <ul>
-          <li><strong>It works in your hands.</strong> The person runs it from an exact script — build, path, before, after, setup, and the one thing most likely to be subtly wrong.</li>
-          <li>Naming the setup matters: some bugs are invisible without a specific device setting turned on.</li>
+          <li><strong>A human exercises the change in a real environment before it ships</strong> — not a test suite standing in for a person. The person runs it from an exact script: build, path, before, after, setup, and the one thing most likely to be subtly wrong.</li>
+          <li>What "in your hands" means depends on what you build — a device for an app, a browser for a front end, a real request against a running instance for a service, a consumer project for a library, a dry run on real-shaped data for a pipeline.</li>
+          <li>Naming the setup matters: some bugs are invisible without a specific device setting, feature flag, account state or data shape in place.</li>
           <li>UI work is compared against the design frame and its tokens — the numbers, not the vibe. Previews added for the states this change affects.</li>
           <li><strong>Capture the pictures here</strong>, while the build is on a device and the state is set up. Ship needs them and reconstructing them later costs far more.</li>
           <li>Then every gate, run first-hand: code review, formatter, linter, the full suite, coverage. A tool that cannot run locally is <em>said</em> not to have run.</li>
@@ -522,7 +531,7 @@
       </div>
       <div class="gatebox">
         <div class="gatelabel">Gate</div>
-        <div class="gatetext">It works in the person's hands, and every gate is green with numbers from runs you performed yourself.</div>
+        <div class="gatetext">A human exercised it in a real environment, and every gate is green with numbers from runs you performed yourself.</div>
       </div>
     </article>
 
@@ -536,16 +545,39 @@
           <li><strong>Attach the proof</strong> — before and after, side by side. For a fix, the "before" is the argument.</li>
           <li>PR body in simple English, one screen or less. Design notes in a collapsed section.</li>
           <li>Link back: the PR onto the ticket, and every adjacent finding marked TICKET during Break down gets filed now.</li>
-          <li><strong>File the follow-up</strong> that re-runs the baseline query once the release has real adoption. Without it the orbit never closes.</li>
+          <li><strong>Name the rollout</strong> — flag, staged or straight to everyone; how it gets turned off without a new release; the number that says revert <em>now</em> rather than waiting for the follow-up; and who is watching, for how long. The weeks between merge and evidence are where bad releases live, and nothing else in the flow is watching them.</li>
+          <li><strong>File the follow-up</strong> that re-runs the baseline query once the release has real adoption. It carries a <strong>named owner</strong> — a person, not a team — and its trigger is a condition rather than a date. Without it the orbit never closes.</li>
         </ul>
       </div>
       <div class="gatebox">
         <div class="gatelabel">Gate</div>
-        <div class="gatetext">PR open with proof attached, linked to the ticket, and the follow-up filed with a date or a trigger.</div>
+        <div class="gatetext">PR open with proof attached, linked to the ticket, the rollout and revert threshold named, and the follow-up filed with an owner and a trigger.</div>
       </div>
     </article>
 
   </div>
+</section>
+
+<section>
+  <h2>Not a mobile process</h2>
+  <p class="sub">It was written from mobile practice and the examples show it, but only the
+  examples are mobile-shaped. The rule at Test is that a human exercises the change in a real
+  environment before it ships. What that means depends on what you build.</p>
+
+  <div class="scroll-x">
+  <table class="grid">
+    <tr><th>What you build</th><th>"In your hands" means</th></tr>
+    <tr><td>Mobile / desktop app</td><td>The build on a device, from an exact script</td></tr>
+    <tr><td>Web front end</td><td>The change in a browser, on the states it affects</td></tr>
+    <tr><td>Backend service</td><td>A real request against a running instance, response inspected</td></tr>
+    <tr><td>Library / SDK</td><td>A consumer project built against it</td></tr>
+    <tr><td>Data pipeline / infra</td><td>A dry run on real-shaped data, output diffed against current</td></tr>
+  </table>
+  </div>
+
+  <p style="margin-top:22px">The number moves the same way. A crash rate, a p95, an adoption
+  share and a row-error count are all trailing numbers with a query behind them. The stage that
+  changes shape is Test; the rest of the flow does not notice what you build.</p>
 </section>
 
 <section>
@@ -573,6 +605,8 @@
 
 <b>FOLLOW-UP</b> filed at Ship
   claim       what this change was supposed to fix
+  owner       a named person, not a team
+  trigger     a condition — adoption threshold, error volume, a release tag
   links       the PR, the original ticket, the defect
   if not met  who to tell, and what the next move is</pre>
 
@@ -588,8 +622,44 @@
     <tr><td>Moved as expected</td><td>The fix worked</td><td>Close it, and say so on the original ticket. This is how a team learns which fixes actually work.</td></tr>
     <tr><td>Did not move</td><td>Wrong, incomplete, or aimed at the wrong cause</td><td>Reopen at <strong>Overview</strong> — now with better data than the first time.</td></tr>
     <tr><td>Moved, something else worse</td><td>The negative check earned its keep</td><td>New problem, new pass. Better found by you than by a user.</td></tr>
+    <tr><td>Never checked</td><td>The flow dropped its own closing step</td><td>Report it as a finding. A follow-up that sat unopened past its trigger is worse than one never filed, because everyone believed the number had been checked.</td></tr>
   </table>
   </div>
+
+  <p style="margin-top:24px">The follow-up is a ticket whose entire job is to ask an
+  uncomfortable question about work already marked done — the first kind to rot in any backlog.
+  That is why it carries a named owner and a condition rather than a date. If it keeps rotting
+  anyway, the flow has an honest metric of its own: <strong>orbit closure rate</strong> — of the
+  runs that filed a follow-up, what share actually got checked.</p>
+</section>
+
+<section>
+  <h2>The run file</h2>
+  <p class="sub">The one piece of state the flow keeps. Without it, everything the early stages
+  produced lives in a conversation that will not survive the weeks between Ship and the
+  follow-up.</p>
+
+  <pre class="shape"><b>PROBLEM</b>     one line
+<b>KIND</b>        fix | feature | replacement | refactor
+<b>BASELINE</b>    metric / query / value / date / version — or "none, watching &lt;x&gt;"
+<b>TARGET</b>      target · check-when · failure condition · regret condition
+<b>CHOSEN</b>      approach, and the reason
+<b>REJECTED</b>    the options not taken, and why
+<b>METHOD</b>      test-first | follow-the-neighbour | design-first | model-first | measure-first
+<b>BLAST</b>       LOW | MEDIUM | HIGH | CRITICAL
+<b>CHUNKS</b>      each with its gate command, criteria, and state
+<b>GATES</b>       which opened, when, by whom — and on autopilot, why
+<b>EVIDENCE</b>    where the before/after captures live
+<b>ROLLOUT</b>     flag/staged/all · kill switch · revert threshold · who is watching
+<b>FOLLOW-UP</b>   ticket id, owner, trigger</pre>
+
+  <p>Three things fall out of it for free. A run survives a lost session. A second person — or a
+  second agent — picks it up without re-deriving anything. And the closing check becomes a
+  re-run of a recorded query instead of an archaeology exercise.</p>
+
+  <p>The location is negotiable: a scratch directory, a gist, a comment on the ticket all work.
+  The existence is not. <strong>If the run file is not being written, this is a conversation,
+  not a process.</strong></p>
 </section>
 <section>
   <h2>Inside Implement</h2>
@@ -714,6 +784,10 @@
     <tr><td>A chart of the metric</td><td>Fixes where "before" is a number, not a picture</td></tr>
   </table>
   </div>
+
+  <p style="margin-top:22px">The same holds away from a screen. "Show the change" for a service
+  is the request and response side by side; for a pipeline, the output diffed against what it
+  used to produce. The medium changes, the obligation does not.</p>
 
   <ol class="disc" style="margin-top:22px">
     <li><b>Capture during Test</b>, while the build is on a device and the state is already set up. Reconstructing it later costs far more.</li>
@@ -858,8 +932,17 @@
     </div>
     <div class="rule">
       <h3>Two rounds, then escalate</h3>
-      <p>Any single disagreement gets two rounds. Still contested: both positions stated fairly,
-      a recommendation made, and the person decides. Nothing lands while contested.</p>
+      <p>A round is one claim and one answer: the implementer fixes it or defends it, and you
+      either accept the defence or restate the claim with new evidence. Two of those. Still
+      contested: both positions stated fairly, a recommendation made, and the person decides.
+      Nothing lands while contested.</p>
+    </div>
+    <div class="rule">
+      <h3>A new requirement is a new orbit</h3>
+      <p>Something added halfway through Implement gets its own Overview and its own number, and
+      either waits or runs beside this one. Folding it in is how a scoped change becomes a
+      four-week branch with no baseline for the half that got added. The one exception: a
+      requirement that invalidates the chosen approach is a return to Resolve, not a new orbit.</p>
     </div>
     <div class="rule">
       <h3>Abort is a valid outcome</h3>
@@ -960,7 +1043,7 @@
 <footer>
   <b>Overview</b> of the problem, with a number · <b>Resolve</b> on an approach, with a target<br>
   <b>Break down</b> into chunks, clear the permissions · <b>Implement</b> one at a time<br>
-  <b>Test</b> it in your hands · <b>Ship</b> it with proof<br>
+  <b>Test</b> it in a real environment, by hand · <b>Ship</b> it with proof and a way back<br>
   then go back and check the number moved — that is the orbit closing
 </footer>
 

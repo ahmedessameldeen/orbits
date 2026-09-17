@@ -13,8 +13,20 @@ section for the stage you are entering. Do not read ahead.
   occurrences, the PR and its inline comments, the design and its tokens.
 - **Get the number.** How many people hit this, how often, since when, on what versions.
   Record the metric, the *exact query*, the value, the date and the release.
-- No number available? Say so explicitly and name what will be watched after release.
-  "No baseline" is an honest answer; silence is not.
+- Which number depends on what kind of work this is:
+
+```
+Fixing something that exists   → the trailing number, measured before
+Building something new        → the leading number, defined before, measured after
+Neither applies                → say what you will watch, and what would make you regret it
+```
+
+  New work has numbers too; they are leading rather than trailing. Adoption of the new path,
+  completion rate of the flow it sits in, time to first success, support contacts about the
+  thing it replaces. "No baseline" is an honest answer for a fix. It is rarely the honest
+  answer for a feature.
+- The third line is not a formality. A change nobody can name a regret condition for is a
+  change nobody can evaluate — better to surface that here than at the follow-up.
 - Confirm the claim against the code. Reports often describe a symptom whose cause is
   elsewhere.
 - Pull the design now, not at review time.
@@ -82,6 +94,11 @@ Record the baseline in the shape given in `metrics.md` before stating this gate.
 **Blast radius.** Rate the change LOW / MEDIUM / HIGH / CRITICAL and say why. HIGH or CRITICAL
 goes to the person before dispatch, in every mode.
 
+**The cause is elsewhere.** The most common discovery at this stage is that the problem is not
+where the ticket said it was. That is a return to **Overview**, not a quiet rewrite of the
+problem statement — the baseline was recorded against the stated cause and may no longer be the
+right number.
+
 > **GATE — Break down**
 > The plan is approved and the permissions are cleared. Backing out here costs one
 > conversation; backing out at Test costs a week.
@@ -133,10 +150,19 @@ to the person with both positions, and nothing lands.
 
 **Driven by:** person, then orchestrator
 
-- **It works in your hands.** The person runs it from an exact script — build, path, before,
-  after, setup, and the one thing most likely to be subtly wrong.
-- Naming the setup matters: some bugs are invisible without a specific device setting turned
-  on.
+- **A human exercises the change in a real environment before it ships.** Not a test suite
+  standing in for a person — a person, on the real thing, from an exact script.
+
+| What you build | "In your hands" means |
+|---|---|
+| Mobile / desktop app | The build on a device, from an exact script |
+| Web front end | The change in a browser, on the states it affects |
+| Backend service | A real request against a running instance, response inspected |
+| Library / SDK | A consumer project built against it |
+| Data pipeline / infra | A dry run on real-shaped data, output diffed against current |
+
+- Naming the setup matters: some bugs are invisible without a specific device setting, feature
+  flag, account state or data shape in place.
 - UI work is compared against the design frame and its tokens — the numbers, not the vibe.
   Previews added for the states this change affects.
 - **Capture the pictures here**, while the build is on a device and the state is set up. Ship
@@ -148,18 +174,18 @@ to the person with both positions, and nothing lands.
 
 ```
 BUILD     the exact command
-PATH      how to get to the screen
+PATH      how to reach the thing that changed
 BEFORE    what it used to do
 AFTER     what it should do now
-SETUP     device settings, accounts, data, network state
+SETUP     device settings, flags, accounts, data, network state
 WATCH     the one thing most likely to be subtly wrong
 ```
 
 Right code solving the wrong thing returns to **Resolve**, not to Implement.
 
 > **GATE — Test**
-> It works in the person's hands, and every gate is green with numbers from runs you performed
-> yourself.
+> A human exercised it in a real environment, and every gate is green with numbers from runs
+> you performed yourself.
 
 ---
 
@@ -175,12 +201,27 @@ Right code solving the wrong thing returns to **Resolve**, not to Implement.
 - PR body in simple English, one screen or less. Design notes in a collapsed section.
 - Link back: the PR onto the ticket, and every adjacent finding marked TICKET during Break down
   gets filed now.
+- **Name the rollout.** The weeks between merge and evidence are where bad releases live, and
+  nothing else in the flow is watching them.
+
+```
+ROLLOUT     flag · staged · straight to everyone
+KILL        how this gets turned off, and by whom, without a new release
+THRESHOLD   the number that says revert now, not "wait for the follow-up"
+WATCH       who is looking, for how long
+```
+
+  The revert threshold is not the failure condition agreed at Resolve. The failure condition
+  asks *did this work*. The threshold asks *is this actively hurting*. A change can clear the
+  second and fail the first for weeks.
+
 - **File the follow-up** that re-runs the baseline query once the release has real adoption.
-  Without it the orbit never closes.
+  It carries a **named owner** — a person, not a team — and its trigger is a **condition**
+  rather than a date. Without it the orbit never closes.
 
 > **GATE — Ship**
-> PR open with proof attached, linked to the ticket, and the follow-up filed with a date or a
-> trigger.
+> PR open with proof attached, linked to the ticket, the rollout and revert threshold named,
+> and the follow-up filed with an owner and a trigger.
 
 ---
 

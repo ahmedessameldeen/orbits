@@ -8,6 +8,8 @@ opened.
 
 > **O**verview · **R**esolve · **B**reak down · **I**mplement · **T**est · **S**hip
 
+*Resolve* means resolving on a course of action, not resolving the ticket.
+
 It is called ORBITS because the work comes back around: the follow-up filed at Ship re-enters
 at Overview, carrying the number it was opened to check.
 
@@ -19,7 +21,7 @@ at Overview, carrying the number it was opened to check.
 
 - **A fix is finished when the number moves, not when it merges.**
 - **A person opens every gate** — or reviews them in one batch, on autopilot.
-- **Agents write the code, never commit.**
+- **Agents write the code. Nothing leaves the machine without a person.**
 
 ## Install
 
@@ -57,12 +59,12 @@ playbooks, read on entry to the stage that needs them rather than all at once:
 
 | Stage | Who drives | Gate |
 |---|---|---|
-| **Overview** | person + orchestrator | The problem is agreed, and it carries a baseline number — or a reasoned "none available" |
+| **Overview** | person + orchestrator | The problem is agreed, and it carries a number — trailing for a fix, leading for new work |
 | **Resolve** | person + orchestrator | One approach chosen and the target metric agreed |
 | **Break down** | orchestrator | The plan is approved and the permissions are cleared |
 | **Implement** | implementer, chunk by chunk | Every chunk meets its criteria, then the full suite |
-| **Test** | person, then orchestrator | It works in your hands, all gates green from runs you performed yourself |
-| **Ship** | orchestrator | PR with proof, linked to the ticket, follow-up filed |
+| **Test** | person, then orchestrator | A human exercised it in a real environment, all gates green from runs you performed yourself |
+| **Ship** | orchestrator | PR with proof, rollout and revert threshold named, follow-up filed with an owner |
 
 Every return path starts on the expensive side of the flow and lands on the cheap side. That is
 the argument for spending real time in Overview and Resolve: those two stages cost messages,
@@ -88,12 +90,48 @@ TARGET    agreed at Resolve
 
 FOLLOW-UP filed at Ship
   claim       what this change was supposed to fix
+  owner       a named person, not a team
+  trigger     a condition — adoption threshold, error volume, a release tag
   links       the PR, the original ticket, the defect
   if not met  who to tell, and what the next move is
 ```
 
+A follow-up that was never run is itself a finding. Report it as one — a flow that quietly
+drops its own closing step is worse than one that never promised it.
+
 Then `/orbits-check` re-runs the identical query. Three outcomes, all useful: it moved, it did
 not move, or it moved and something else got worse.
+
+## The run file
+
+Everything the early stages produce — the baseline, the rejected options, the target, the
+failure condition, the chunk list, which gates opened — lives in a conversation unless it is
+written down, and that conversation will not survive the weeks between Ship and the follow-up.
+
+So each run keeps a file, updated at every gate:
+
+```
+PROBLEM · KIND · BASELINE · TARGET · CHOSEN · REJECTED · METHOD · BLAST
+CHUNKS · GATES · EVIDENCE · ROLLOUT · FOLLOW-UP
+```
+
+A run survives a lost session, changes hands without re-deriving anything, and closes weeks
+later as a re-run of a recorded query rather than an archaeology exercise. The location is
+negotiable; the existence is not.
+
+## Works on more than mobile
+
+The flow was written from mobile practice, but only the examples are mobile-shaped. The rule at
+Test is that **a human exercises the change in a real environment before it ships** — what that
+means depends on what you build:
+
+| What you build | "In your hands" means |
+|---|---|
+| Mobile / desktop app | The build on a device, from an exact script |
+| Web front end | The change in a browser, on the states it affects |
+| Backend service | A real request against a running instance, response inspected |
+| Library / SDK | A consumer project built against it |
+| Data pipeline / infra | A dry run on real-shaped data, output diffed against current |
 
 ## Roles, not product names
 

@@ -11,6 +11,8 @@ the gate opened.
 
 **O**verview · **R**esolve · **B**reak down · **I**mplement · **T**est · **S**hip
 
+*Resolve* here means resolving on a course of action, not resolving the ticket.
+
 It is called ORBITS because the work comes back around: the follow-up filed at Ship re-enters
 at Overview, carrying the number it was opened to check.
 
@@ -18,7 +20,7 @@ Three things hold the whole flow up:
 
 - **A fix is finished when the number moves, not when it merges.**
 - **A person opens every gate** — or reviews them in one batch, on autopilot.
-- **Agents write the code, never commit.**
+- **Agents write the code. Nothing leaves the machine without a person.**
 
 ## How to use this skill
 
@@ -26,9 +28,16 @@ Three things hold the whole flow up:
    are not allowed to skip to Break down because the fix looks obvious.
 2. Read that stage's section in `references/stages.md` **on entry**, not up front.
 3. Do the stage. State its gate. **Stop and wait** for the person to open it.
-4. Only then start the next stage.
+4. Write what the stage produced into the run file (`references/templates.md`).
+5. Only then start the next stage.
 
 Never run two stages in one turn. Never state a gate and keep working while it is discussed.
+
+**The run file is what makes the orbit closable.** Everything a stage produces — the baseline,
+the rejected options, the target, the failure condition, the chunk list, which gates opened —
+lives in a conversation unless it is written down, and the conversation will not survive the
+weeks between Ship and the follow-up. Write it at every gate, keep it beside the work, and
+`/orbits-check` becomes a re-run of a recorded query instead of an archaeology exercise.
 
 ## The pipeline
 
@@ -43,6 +52,10 @@ Overview  Resolve   Break down  Implement   Test      Ship
   │          │        the plan was wrong      │          │
   │          └─────────────────────────────────┘         │
   │            right code, wrong thing → choose again     │
+  ▲                     │                                 │
+  └─────────────────────┘                                 │
+    the cause is elsewhere → the problem statement was wrong
+  │                                                       │
   └───────────────────────────────────────────────────────┘
      the orbit closes · weeks later · did the number actually move?
 ```
@@ -60,8 +73,8 @@ not a failure, it is the flow closing its own loop.
 | **Resolve** | One approach chosen and the target metric agreed. The rejected options are recorded too. |
 | **Break down** | The plan is approved and the permissions are cleared. |
 | **Implement** | Every chunk green against its own criteria, then the full suite. |
-| **Test** | It works in the person's hands, and every gate is green with numbers from runs you performed yourself. |
-| **Ship** | PR open with proof attached, linked to the ticket, and the follow-up filed with a date or a trigger. |
+| **Test** | A human exercised it in a real environment, and every gate is green with numbers from runs you performed yourself. |
+| **Ship** | PR open with proof attached, linked to the ticket, the rollout and revert threshold named, and the follow-up filed with an owner and a trigger. |
 
 ## Roles, not product names
 
@@ -96,9 +109,16 @@ stated as claims with evidence, answered with a fix or a defence. With only one,
 orchestrator puts them to the person. A single agent arguing with itself produces the
 appearance of rigour and none of the substance.
 
-**Two rounds, then escalate.** Any single disagreement gets two rounds. Still contested: both
-positions stated fairly, a recommendation made, and the person decides. Nothing lands while
-contested.
+**Two rounds, then escalate.** A round is one claim and one answer: the implementer fixes it or
+defends it, and you either accept the defence or restate the claim with new evidence. Two of
+those. Still contested: both positions stated fairly, a recommendation made, and the person
+decides. Nothing lands while contested.
+
+**A new requirement is a new orbit.** When something is added halfway through Implement, it
+gets its own Overview and its own number, and either waits or runs beside this one. Folding it
+in is how a scoped change becomes a four-week branch with no baseline for the half that got
+added. The one exception: a requirement that invalidates the chosen approach is not a new
+orbit, it is a return to Resolve.
 
 **Talk early, terse late.** Overview and Resolve are cheap and are where the expensive mistakes
 get caught — take as many rounds as the problem needs. Implement, Test and Ship are where
@@ -144,4 +164,4 @@ Read these on entry to the stage that needs them — not up front.
 | `references/autopilot.md` | The person asks for autopilot, or asks to batch the gates. |
 | `references/permissions.md` | At Break down, during the permission pre-flight. |
 | `references/evidence.md` | At Test (capture) and Ship (attach). Any change a user can see. |
-| `references/templates.md` | Writing an implementer brief, a decision-log entry, a PR body, or a follow-up ticket. |
+| `references/templates.md` | Opening or updating the run file, writing an implementer brief, a decision-log entry, a PR body, or a follow-up ticket. |

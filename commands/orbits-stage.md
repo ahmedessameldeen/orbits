@@ -14,11 +14,14 @@ person to confirm before proceeding.
 ## How to run it
 
 1. Load the `orbits` skill and read **only** that stage's section in `references/stages.md`.
-2. Confirm in one line what the previous gate established. If the previous gate was never
+2. **Look for the run file first.** If this work has one, read it — the baseline, target,
+   rejected options and chunk list are already recorded and do not need re-deriving. If it does
+   not exist, open one now with whatever is known, and say which fields are missing.
+3. Confirm in one line what the previous gate established. If the previous gate was never
    opened, say so — entering mid-flow without it is how a run ends up with no baseline and
    no target.
-3. Do the stage. Produce its output in the fixed shape from `references/templates.md`.
-4. State the gate and stop.
+4. Do the stage. Produce its output in the fixed shape from `references/templates.md`.
+5. State the gate and stop. When it opens, write the result into the run file.
 
 ## Entering without the earlier gates
 

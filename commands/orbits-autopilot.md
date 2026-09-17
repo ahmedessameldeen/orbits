@@ -24,10 +24,12 @@ every finding still gets argued.
 2. Before starting, check the work against the good-fit / poor-fit table. If it is a poor fit,
    say so and recommend `/orbits` instead. Do not start a run you expect to abort.
 3. Run **Overview → Resolve → Break down → Implement**, opening each gate yourself.
-4. Write a decision-log entry for **every** gate you open. A gate opened without an entry was
-   skipped, not automated.
+4. Write a decision-log entry for **every** gate you open, into the run file
+   (`references/templates.md`). A gate opened without an entry was skipped, not automated —
+   and a log that lives only in this conversation cannot be reviewed after it ends.
 5. Stop at **Test**. Hand back with the full decision log and the manual test script.
-6. **Ship never runs on autopilot.** It leaves the machine.
+6. **Ship never runs on autopilot.** It leaves the machine — and it is where the rollout,
+   the revert threshold and the follow-up owner get decided, which are the person's calls.
 
 ## Hard stops — announce and wait
 

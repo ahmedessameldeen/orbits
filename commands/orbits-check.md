@@ -15,9 +15,9 @@ data.
 
 Load the `orbits` skill and read `references/metrics.md`.
 
-1. **Find the baseline.** Metric, exact query, value, date, version. It was recorded at
-   Overview. If it was never recorded, say so plainly — this check cannot be completed, and
-   that is a finding about the process, not about the fix.
+1. **Find the baseline.** Read the run file — metric, exact query, value, date, version were
+   recorded at Overview. If there is no run file and no recorded query, say so plainly: this
+   check cannot be completed, and that is a finding about the process, not about the fix.
 2. **Check the timing first.** Has the release reached real adoption? Most crash tools report
    version adoption — use that as the trigger rather than a guessed date. Comparing too early
    produces a confident wrong answer. If it is too early, say when to come back.
@@ -46,5 +46,9 @@ OUTCOME     moved | did not move | moved, something else worse
 NEXT        close it · reopen at Overview · new pass
 ```
 
-Whatever the result, write it back onto the original ticket. An unrecorded outcome teaches
-nobody anything.
+Whatever the result, write it back onto the original ticket and into the run file. An
+unrecorded outcome teaches nobody anything.
+
+**If the check was never run until now**, say that too. A follow-up that sat unopened past its
+trigger is itself a finding — the flow quietly dropped its own closing step while everyone
+involved believed the number had been checked.

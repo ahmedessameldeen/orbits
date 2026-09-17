@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "The ORBITS Flow — a gated, metric-anchored working agreement for shipping software with agents",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {

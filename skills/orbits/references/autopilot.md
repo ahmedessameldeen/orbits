@@ -64,6 +64,9 @@ UNDO        how to reverse this if you disagree
 
 **A gate opened without an entry was skipped, not automated.**
 
+Entries go into the run file, not only into the conversation. A decision log that disappears
+with the session cannot be reviewed, which defeats the point of logging it.
+
 ## When to use it
 
 | Good fit | Poor fit |
