@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 444" width="960" height="444" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">The ORBITS Flow</title>
+<desc id="d">Six stages — Overview, Resolve, Break down, Implement, Test, Ship — each ending at a gate a person opens. Three dashed paths return work to an earlier, cheaper stage: Break down to Overview when the cause is elsewhere, Implement to Break down when a chunk fails twice, Test to Resolve when the code is right but solves the wrong thing. A solid path returns from Ship to Overview weeks later to check whether the number actually moved.</desc>
+<defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#39414F"/></marker>
+  <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#A05F00"/></marker>
+</defs>
+<rect width="960" height="444" rx="10" fill="#F6F7F9"/>
+<path d="M363 90 C 363 20, 41 20, 41 89" fill="none" stroke="#A05F00" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ahg)"/>
+<text x="202" y="24" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" fill="#A05F00">cause is elsewhere → the problem was wrong</text>
+<text x="85" y="80" text-anchor="middle" font-size="22" font-weight="700" fill="#A05F00">O</text>
+<rect x="17" y="92" width="136" height="60" rx="6" fill="#FFFFFF" stroke="#C9D0DB"/>
+<text x="85" y="119" text-anchor="middle" font-size="17" font-weight="650" fill="#171A21">Overview</text>
+<text x="85" y="138" text-anchor="middle" font-size="11.5" fill="#606A7B">person + orchestrator</text>
+<line x1="85" y1="152" x2="85" y2="170" stroke="#A05F00" stroke-width="1.6"/>
+<rect x="21" y="170" width="128" height="48" rx="5" fill="#FBF1DF" stroke="#A05F00" stroke-opacity=".6"/>
+<text x="85" y="190" text-anchor="middle" font-size="12" fill="#7A4800">problem agreed,</text>
+<text x="85" y="206" text-anchor="middle" font-size="12" fill="#7A4800">with a number</text>
+<line x1="155" y1="122" x2="171" y2="122" stroke="#39414F" stroke-width="1.6" marker-end="url(#ah)"/>
+<text x="243" y="80" text-anchor="middle" font-size="22" font-weight="700" fill="#A05F00">R</text>
+<rect x="175" y="92" width="136" height="60" rx="6" fill="#FFFFFF" stroke="#C9D0DB"/>
+<text x="243" y="119" text-anchor="middle" font-size="17" font-weight="650" fill="#171A21">Resolve</text>
+<text x="243" y="138" text-anchor="middle" font-size="11.5" fill="#606A7B">person + orchestrator</text>
+<line x1="243" y1="152" x2="243" y2="170" stroke="#A05F00" stroke-width="1.6"/>
+<rect x="179" y="170" width="128" height="48" rx="5" fill="#FBF1DF" stroke="#A05F00" stroke-opacity=".6"/>
+<text x="243" y="190" text-anchor="middle" font-size="12" fill="#7A4800">one approach,</text>
+<text x="243" y="206" text-anchor="middle" font-size="12" fill="#7A4800">one target</text>
+<line x1="313" y1="122" x2="329" y2="122" stroke="#39414F" stroke-width="1.6" marker-end="url(#ah)"/>
+<text x="401" y="80" text-anchor="middle" font-size="22" font-weight="700" fill="#A05F00">B</text>
+<rect x="333" y="92" width="136" height="60" rx="6" fill="#FFFFFF" stroke="#C9D0DB"/>
+<text x="401" y="119" text-anchor="middle" font-size="17" font-weight="650" fill="#171A21">Break down</text>
+<text x="401" y="138" text-anchor="middle" font-size="11.5" fill="#606A7B">orchestrator</text>
+<line x1="401" y1="152" x2="401" y2="170" stroke="#A05F00" stroke-width="1.6"/>
+<rect x="337" y="170" width="128" height="48" rx="5" fill="#FBF1DF" stroke="#A05F00" stroke-opacity=".6"/>
+<text x="401" y="190" text-anchor="middle" font-size="12" fill="#7A4800">plan approved,</text>
+<text x="401" y="206" text-anchor="middle" font-size="12" fill="#7A4800">permissions cleared</text>
+<line x1="471" y1="122" x2="487" y2="122" stroke="#39414F" stroke-width="1.6" marker-end="url(#ah)"/>
+<text x="559" y="80" text-anchor="middle" font-size="22" font-weight="700" fill="#A05F00">I</text>
+<rect x="491" y="92" width="136" height="60" rx="6" fill="#FFFFFF" stroke="#C9D0DB"/>
+<text x="559" y="119" text-anchor="middle" font-size="17" font-weight="650" fill="#171A21">Implement</text>
+<text x="559" y="138" text-anchor="middle" font-size="11.5" fill="#606A7B">implementer</text>
+<line x1="559" y1="152" x2="559" y2="170" stroke="#A05F00" stroke-width="1.6"/>
+<rect x="495" y="170" width="128" height="48" rx="5" fill="#FBF1DF" stroke="#A05F00" stroke-opacity=".6"/>
+<text x="559" y="190" text-anchor="middle" font-size="12" fill="#7A4800">every chunk meets</text>
+<text x="559" y="206" text-anchor="middle" font-size="12" fill="#7A4800">its criteria</text>
+<line x1="629" y1="122" x2="645" y2="122" stroke="#39414F" stroke-width="1.6" marker-end="url(#ah)"/>
+<text x="717" y="80" text-anchor="middle" font-size="22" font-weight="700" fill="#A05F00">T</text>
+<rect x="649" y="92" width="136" height="60" rx="6" fill="#FFFFFF" stroke="#C9D0DB"/>
+<text x="717" y="119" text-anchor="middle" font-size="17" font-weight="650" fill="#171A21">Test</text>
+<text x="717" y="138" text-anchor="middle" font-size="11.5" fill="#606A7B">person → orchestrator</text>
+<line x1="717" y1="152" x2="717" y2="170" stroke="#A05F00" stroke-width="1.6"/>
+<rect x="653" y="170" width="128" height="48" rx="5" fill="#FBF1DF" stroke="#A05F00" stroke-opacity=".6"/>
+<text x="717" y="190" text-anchor="middle" font-size="12" fill="#7A4800">a human ran it,</text>
+<text x="717" y="206" text-anchor="middle" font-size="12" fill="#7A4800">all gates green</text>
+<line x1="787" y1="122" x2="803" y2="122" stroke="#39414F" stroke-width="1.6" marker-end="url(#ah)"/>
+<text x="875" y="80" text-anchor="middle" font-size="22" font-weight="700" fill="#A05F00">S</text>
+<rect x="807" y="92" width="136" height="60" rx="6" fill="#FFFFFF" stroke="#C9D0DB"/>
+<text x="875" y="119" text-anchor="middle" font-size="17" font-weight="650" fill="#171A21">Ship</text>
+<text x="875" y="138" text-anchor="middle" font-size="11.5" fill="#606A7B">orchestrator</text>
+<line x1="875" y1="152" x2="875" y2="170" stroke="#A05F00" stroke-width="1.6"/>
+<rect x="811" y="170" width="128" height="48" rx="5" fill="#FBF1DF" stroke="#A05F00" stroke-opacity=".6"/>
+<text x="875" y="190" text-anchor="middle" font-size="12" fill="#7A4800">proof, rollout,</text>
+<text x="875" y="206" text-anchor="middle" font-size="12" fill="#7A4800">follow-up owner</text>
+<path d="M559 219 C 559 256, 401 256, 401 222" fill="none" stroke="#A05F00" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ahg)"/>
+<text x="480" y="263" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" fill="#A05F00">chunk fails twice → the plan was wrong</text>
+<path d="M717 219 C 717 322, 243 322, 243 222" fill="none" stroke="#A05F00" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ahg)"/>
+<text x="480" y="314" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" fill="#A05F00">right code, wrong thing → choose again</text>
+<path d="M875 219 C 875 406, 85 406, 85 222" fill="none" stroke="#A05F00" stroke-width="2.4" marker-end="url(#ahg)"/>
+<text x="480" y="380" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="600" fill="#A05F00">the orbit closes · weeks later · did the number move?</text>
+<path d="M17 405 V 410 H 311 V 405" fill="none" stroke="#606A7B" stroke-width="1" stroke-opacity=".7"/>
+<text x="164" y="430" text-anchor="middle" font-size="12" fill="#606A7B">talk early — these cost messages</text>
+<path d="M491 405 V 410 H 943 V 405" fill="none" stroke="#606A7B" stroke-width="1" stroke-opacity=".7"/>
+<text x="717" y="430" text-anchor="middle" font-size="12" fill="#606A7B">terse late — these cost days</text>
+</svg>

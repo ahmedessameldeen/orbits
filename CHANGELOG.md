@@ -29,6 +29,11 @@ Integrates a pre-publication review of the flow. No new stages, no new commands.
 - **A new requirement is a new orbit**, as a standing rule.
 - A definition of what counts as a **round** in "two rounds, then escalate".
 
+### Docs
+
+- README opens with the flow diagram — light and dark SVGs, switched by the reader's GitHub
+  theme — plus a short guide to reading it.
+
 ### Generalised
 
 - Test is now "a human exercises the change in a real environment", with a translation table

@@ -13,6 +13,20 @@ opened.
 It is called ORBITS because the work comes back around: the follow-up filed at Ship re-enters
 at Overview, carrying the number it was opened to check.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/orbits-flow-dark.svg">
+    <img src="docs/assets/orbits-flow-light.svg" width="100%"
+         alt="The ORBITS flow. Six stages left to right — Overview, Resolve, Break down, Implement, Test, Ship — each ending at a gate a person opens. Dashed arrows return work to an earlier stage: Break down to Overview when the cause is elsewhere, Implement to Break down when a chunk fails twice, Test to Resolve when the code is right but solves the wrong thing. A solid arrow runs from Ship back to Overview: weeks later, check whether the number moved.">
+  </picture>
+</p>
+
+**How to read it.** Work moves left to right, and only when the amber gate under each stage has
+been opened by a person. Dashed arrows are work coming back to an earlier stage — normal, not a
+failure — and every one of them lands on the cheap side, which is why the flow spends its
+conversation early. The solid arrow is the orbit closing: weeks after Ship, the same query runs
+again to find out whether the number actually moved.
+
 📖 **[Read the full flow →](https://ahmedessameldeen.github.io/orbits/)**
 
 ---
@@ -167,6 +181,7 @@ skills/orbits/
   SKILL.md             the flow, the roles, the rules
   references/          six playbooks, read on entry
 docs/index.html        the full illustrated spec (GitHub Pages)
+docs/assets/           the README diagram, light and dark
 ```
 
 ## License
